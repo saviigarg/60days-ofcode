@@ -1,0 +1,69 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+void merge(vector<int>& arr, int s, int e) {
+    int mid = s + (e - s) / 2;
+    vector<int> leftArr(arr.begin() + s, arr.begin() + mid + 1);
+    vector<int> rightArr(arr.begin() + mid + 1, arr.begin() + e + 1);
+    int MaxArrIndex = s;
+    int index1 = 0;
+    int index2 = 0;
+
+    while (index1 < leftArr.size() && index2 < rightArr.size()) {
+        if (leftArr[index1] < rightArr[index2]) {
+            arr[MaxArrIndex++] = leftArr[index1++];
+        } else {
+            arr[MaxArrIndex++] = rightArr[index2++];
+        }
+    }
+
+    while (index1 < leftArr.size()) {
+        arr[MaxArrIndex++] = leftArr[index1++];
+    }
+
+    while (index2 < rightArr.size()) {
+        arr[MaxArrIndex++] = rightArr[index2++];
+    }
+}
+
+void mergeSort(vector<int>& arr, int s, int e) {
+    if (s >= e) {
+        return;
+    }
+    int mid = s + (e - s) / 2;
+    mergeSort(arr, s, mid);
+    mergeSort(arr, mid + 1, e);
+    merge(arr, s, e);
+}
+
+int main() {
+    // Input the size of the array
+    int size;
+    cout << "Enter the size of the array: ";
+    cin >> size;
+
+    // Input the array elements
+    vector<int> numbers;
+    cout << "Enter " << size << " elements of the array:\n";
+    for (int i = 0; i < size; i++) {
+        int element;
+        cin >> element;
+        numbers.push_back(element);
+    }
+
+    cout << "Original Array: ";
+    for (int i = 0; i < size; i++) {
+        cout << numbers[i] << " ";
+    }
+
+    // Sort the array using mergeSort
+    mergeSort(numbers, 0, size - 1);
+
+    cout << "\nSorted Array: ";
+    for (int i = 0; i < size; i++) {
+        cout << numbers[i] << " ";
+    }
+
+    return 0;
+}
