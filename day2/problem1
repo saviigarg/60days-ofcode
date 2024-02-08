@@ -1,0 +1,45 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+void selectionSort(vector<int>& arr, int n){
+  for(int i=0; i<n-1; i++){
+    int minIndex = i;
+    for(int j=i+1; j<n; j++){
+      if(arr[j]<arr[minIndex]){
+        minIndex = j;
+      }
+      swap(arr[minIndex],arr[i]);
+    }
+  }
+}
+
+int main() {
+    // Input the size of the array
+    int size;
+    cout << "Enter the size of the array: ";
+    cin >> size;
+
+    // Input the array elements
+    vector<int> numbers;
+    cout << "Enter " << size << " elements of the array:\n";
+    for (int i = 0; i < size; i++) {
+        int element;
+        cin >> element;
+        numbers.push_back(element);
+    }
+
+    cout << "Original Array: ";
+    for (int i = 0; i < size; i++) {
+        cout << numbers[i] << " ";
+    }
+
+    // Sort the array using selectionSort
+    selectionSort(numbers, size );
+
+    cout << "\nSorted Array: ";
+    for (int i = 0; i < size; i++) {
+        cout << numbers[i] << " ";
+    }
+
+    return 0;
+}
