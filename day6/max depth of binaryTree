@@ -1,0 +1,53 @@
+#include <iostream>
+#include <algorithm> // for max function
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int value) : val(value), left(nullptr), right(nullptr) {}
+};
+
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if (!root) return 0;
+        int maxLeft = maxDepth(root->left);
+        int maxRight = maxDepth(root->right);
+        return std::max(maxLeft, maxRight) + 1;
+    }
+};
+
+// Function to build a binary tree from user input
+TreeNode* buildTree() {
+    int val;
+    std::cout << "Enter the value for the node (enter -1 for NULL): ";
+    std::cin >> val;
+
+    if (val == -1) {
+        return nullptr;
+    }
+
+    TreeNode* root = new TreeNode(val);
+
+    std::cout << "Enter the values for left child of " << val << ": ";
+    root->left = buildTree();
+
+    std::cout << "Enter the values for right child of " << val << ": ";
+    root->right = buildTree();
+
+    return root;
+}
+
+int main() {
+    // Taking input for a binary tree
+    TreeNode* root = buildTree();
+
+    Solution solution;
+    int depth = solution.maxDepth(root);
+
+    std::cout << "Maximum Depth of the Binary Tree: " << depth << std::endl;
+
+    return 0;
+}
