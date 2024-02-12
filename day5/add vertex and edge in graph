@@ -1,0 +1,64 @@
+#include <iostream> 
+#include <unordered_map>
+#include<vector>
+class Graph{
+private:
+    std::unordered_map<char, std::vector<char>> adjList;
+public:
+     //function to add a vertex to the graph
+    void addVertex(char vertex){
+       if(adjList.find(vertex) == adjList.end()){ //checks if the key is not present in the map
+         adjList[vertex] = std::vector<char>(); //if not preesnt, creates a new entry in the map with the key as the vertex and an empty vector as the value 
+         std:: cout << "Vertex Added: " << vertex << std::endl;
+       } else{
+          std:: cout << "Vertex " << vertex << " already exists." << std::endl;
+       }
+       
+    }
+    //function to add an edge between two vertices
+    void addEdge(char from, char to){
+      if(adjList.find(from) != adjList.end() && adjList.find(to) != adjList.end()){
+        adjList[from].push_back(to);
+        std::cout << "Edge added: " << from << " -> " << to << std::endl;
+      } else{
+        std::cout << "Vertices " << from << " and/or " << to << " not found. Please add vertices first." << std::endl;
+      }
+    }
+    
+};
+int main(){
+  Graph graph;
+  char option;
+  do {
+    std::cout << "Choose an option:\n";
+    std::cout<<"1. Add Vertex\n";
+    std::cout<<"2. Add Edge\n";
+    std::cout<<"3. Quit\n";
+    std::cout<<"Option: ";
+    std::cin>> option;
+    switch(option){
+      case '1': {
+        char vertex;
+        std::cout<<"Enter vertex to add: ";
+        std::cin>>vertex;
+        graph.addVertex(vertex);
+        break;
+      }
+      case '2':{
+        char from, to;
+        std::cout << "Enter source vertex ";
+        std::cin>> from;
+        std::cout<<"Enter destination vertex ";
+        std::cin>>to;
+        graph.addEdge(from,to);
+        break;
+      }
+      case '3':
+        std::cout<<"Quitting Program.\n";
+        break;
+      default:
+        std::cout<< "Invalid option. Please try again.\n";
+    }
+  } while(option != '3');
+  return 0;
+}
