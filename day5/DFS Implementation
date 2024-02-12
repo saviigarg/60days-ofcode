@@ -1,0 +1,69 @@
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+using namespace std;
+
+class Solution {
+public:
+    void DFS(unordered_map<int, vector<int>>& adj, int u, vector<bool>& visited, vector<int>& result) {
+        if (visited[u]) {
+            return;
+        }
+
+        visited[u] = true;
+        result.push_back(u);
+
+        for (int &v : adj[u]) {
+            if (!visited[v]) {
+                DFS(adj, v, visited, result);
+            }
+        }
+    }
+
+    vector<int> dfsOfGraph(int V, vector<int> mp[]) {
+        unordered_map<int, vector<int>> adj;
+        for (int u = 0; u < V; u++) {
+            for (auto v : mp[u]) {
+                adj[u].push_back(v);
+            }
+        }
+
+        vector<int> result;
+        vector<bool> visited(V, false);
+        DFS(adj, 0, visited, result);
+
+        return result;
+    }
+};
+
+int main() {
+    int V;
+    cout << "Enter the number of vertices in the graph: ";
+    cin >> V;
+
+    vector<int> adjacencyList[V];
+    cout << "Enter the adjacency list for each vertex: " << endl;
+    for (int u = 0; u < V; u++) {
+        int num_neighbours;
+        cout << "Enter the number of neighbours for vertex " << u << " : ";
+        cin >> num_neighbours;
+        cout << "Enter the neighbours for vertex " << u << " : ";
+        for (int i = 0; i < num_neighbours; i++) {
+            int neighbour;
+            cin >> neighbour;
+            adjacencyList[u].push_back(neighbour);
+        }
+    }
+
+    Solution solution;
+    vector<int> result = solution.dfsOfGraph(V, adjacencyList);
+
+    // Displaying the result
+    cout << "DFS of the graph starting from vertex 0: ";
+    for (int i = 0; i < result.size(); i++) {
+        cout << result[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
