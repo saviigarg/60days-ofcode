@@ -1,0 +1,33 @@
+class Solution{
+public:
+    void BFS(unordered_map<int, vector<int>> &adj, int u, vector<bool> &visited, vector<int> &result){
+      queue<int> que;
+      que.push(u);
+      visited[u] = true;
+      result.push_back(u);
+      while(!que.empty()){
+        int u = que.front();
+        que.pop();
+        for(int &v : adj[u]){
+          if(!visited[v]){
+            que.push(v);
+            visited[v] = true;
+            result.push_back(v);
+          }
+        }
+      }
+    }
+    vector<int> bfsOfGraph(int V, vector<int> mp[]){
+      unordered_map<int, vector<int>> adj;
+      for(int i=0;i<V;i++){
+        for(auto it = mp[i].begin(); it != mp[i].end(); it++){
+          adj[i].push_back(*it);
+        }
+      }
+      vector<bool> visited(V, false);
+      vector<int> result;
+      BFS(adj , 0 , visited, result);
+      return result;
+    }
+
+}
